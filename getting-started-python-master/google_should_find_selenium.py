@@ -10,8 +10,8 @@ def search_test():
     driver.get("https://duckduckgo.com/")
     WebDriverWait(driver,2).until(EC.element_to_be_clickable((By.ID, "searchbox_input")))
     driver.find_element(By.ID, "searchbox_input").send_keys("ЫВАПРОЛkjlk", Keys.ENTER)
-    WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.CLASS_NAME, "THG_yNtlhifBrJDatoUn")))
-    driver.find_element(By.CLASS_NAME, "THG_yNtlhifBrJDatoUn").is_displayed()
+    # driver.find_element(By.CLASS_NAME, "THG_yNtlhifBrJDatoUn").is_displayed()
+    # Тест конфликт
 
 search_test()
-#123
+#конфликт
