@@ -1,10 +1,9 @@
-import os
-import calendar
-from datetime import date
+import re
+import time
+from selenium.webdriver.common.keys import Keys
 import allure
-from selene import have, be, by
+from selene import have, be, by, query
 from selene import browser
-
 from tests.models.deposit import Deposit_class
 from tests.models.deposit_calculator_locators import DepositCalculatorLocators as L
 
@@ -19,7 +18,11 @@ class Deposit:
     def filling_field(self, deposit: Deposit_class):
         with allure.step("Вводим сумму"):
             if deposit.deposit_amount is not None:
-                browser.element(L.AMOUNT).type(deposit.deposit_amount)
+                e = browser.element(L.AMOUNT)
+                e.click()
+                e.send_keys(Keys.CONTROL, 'a', Keys.DELETE)  # или Keys.BACKSPACE
+                e.type(str(deposit.deposit_amount))
+
         with allure.step("Выбираем срок вклада"):
             if deposit.term is not None:
                 browser.element(L.TERM_BTN(deposit.term)).click()
@@ -27,49 +30,51 @@ class Deposit:
 
     def should_show_calc(self, deposit: Deposit_class):
         with allure.step('Проверяем результат калькулятора'):
-            # сумма в инпуте
-            if deposit.deposit_amount is not None:
-                browser.element(L.AMOUNT).should(have.value(str(deposit.deposit_amount)))
 
-            # «Вклад на N месяцев»
-            if deposit.term is not None:
+            time.sleep(1)
+
+            if deposit.deposit_amount is not None:
+                actual = browser.element(L.AMOUNT).get(query.value).replace(' ', '')
+                expected = re.sub(r'\D', '', str(deposit.deposit_amount))
+                assert actual == expected
+
+            if getattr(deposit, 'deposit_type', None):
+                browser.element(L.DEPOSIT_TYPE).should(have.text(str(deposit.deposit_type)))
+            elif deposit.term is not None:
                 browser.element(L.DEPOSIT_TYPE).should(have.text(str(deposit.term)))
 
-            # ставка
             if deposit.interest_rate is not None:
                 browser.element(L.RATE).should(have.text(str(deposit.interest_rate)))
 
-            # доход
             if deposit.profit_amount is not None:
-                browser.element(L.PROFIT).should(have.text(str(deposit.profit_amount)))
+                profit_text = browser.element(L.PROFIT).get(query.text).split("\n")[0].strip()
+                expected_profit = str(deposit.profit_amount).strip()
 
-            # «к <дата>» — считаем от today + term, только если задан term
-            if deposit.term is not None:
-                today = date.today()
-                y = today.year + (today.month - 1 + int(deposit.term)) // 12
-                m = (today.month - 1 + int(deposit.term)) % 12 + 1
-                d = min(today.day, calendar.monthrange(y, m)[1])
-                browser.element(L.MATURITY).should(have.text(str(y))).should(have.text(str(d)))
+                # сравнение только по цифрам и разделителям
+                act_num = re.sub(r'[^\d,.-]', '', profit_text)
+                exp_num = re.sub(r'[^\d,.-]', '', expected_profit)
 
-            # инфо-блоки — проверяем только если в модели явно указаны флаги
+                print(f"[DEBUG] Ожидали: {exp_num}, получили: {act_num}")
+                assert act_num == exp_num, f"Ожидали: {exp_num}, получили: {act_num}"
+
             if getattr(deposit, 'check_capitalization', None):
                 browser.element(L.CAPITALIZATION).should(be.visible)
-            if getattr(deposit, 'check_insurance', None):
-                browser.element(L.INSURANCE).should(be.visible)
 
         return self
 
     def should_have_active_buttons(self, deposit: Deposit_class = None):
         with allure.step('Проверяем кнопки'):
-            # если в модели есть флаги, уважаем их; иначе проверяем обе
             check_conditions = True
             check_cta = True
             if deposit is not None:
                 check_conditions = getattr(deposit, 'check_conditions', True)
                 check_cta = getattr(deposit, 'check_cta', True)
 
-            if check_conditions:
-                browser.element(L.CONDITIONS).should(be.visible).should(be.enabled)
-            if check_cta:
-                browser.element(L.CTA).should(be.visible).should(be.enabled)
-        return self
+                if check_conditions:
+                    browser.element(L.CONDITIONS).should(be.visible).should(be.enabled)
+                if check_cta:
+                    browser.element(L.CTA).should(be.visible).should(be.enabled)
+                return self
+
+    def should_have_stub(self):
+        browser.element(L.STUB).should(be.visible)

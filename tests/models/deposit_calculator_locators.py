@@ -11,7 +11,6 @@ class DepositCalculatorLocators:
     CTA      = by.xpath("(//button[contains(., 'Открыть') and contains(., 'вклад') and contains(., 'бесплатно')])[2]")
     CONDITIONS = by.xpath("//a[@data-testid='rates-button']")
     DEPOSIT_TYPE = by.xpath("//div[@data-testid='ob-badge']")
-
-    CAPITALIZATION = by.xpath("//div[@data-testid='capitalization']")
-    INSURANCE = by.xpath("// div[normalize - space(.)='Средства на вкладе застрахованы']")
+    CAPITALIZATION = by.xpath("//button[@data-testid='deposit-button']")
+    STUB = by.xpath("//div[@data-testid='warning']")
 

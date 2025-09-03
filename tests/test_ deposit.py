@@ -39,29 +39,22 @@ def test_deposit_min():
 def test_deposit_invalid_sum_below_min():
     page = DepositPage().open_form()
     value = Deposit_class(
-        deposit_amount=9999,
-        term=4
+        deposit_amount=9999
     )
     page.filling_field(value)
-    browser.element(L.CTA).should(be.disabled)      # кнопка недоступна
-    # при необходимости можно добавить: поле подсветилось/ошибка и т.п.
-
+    page.should_have_stub()
 
 def test_deposit_invalid_symbols():
     page = DepositPage().open_form()
     value = Deposit_class(
         deposit_amount="абвГДЕabcXYZ!@#$%^&*()",
-        term=4
     )
     page.filling_field(value)
-    browser.element(L.CTA).should(be.disabled)      # ввод невалиден → CTA неактивна
+    page.should_have_stub()
 
 def test_form_display_smoke():
     page = DepositPage().open_form()
-    value = Deposit_class(
-        deposit_amount=150000,
-        term=3
-    )
+    value = Deposit_class(deposit_amount=150000, term=3)
     page.filling_field(value).should_have_active_buttons()
     browser.element(L.RATE).should(be.visible)
     browser.element(L.PROFIT).should(be.visible)
