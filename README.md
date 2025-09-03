@@ -24,7 +24,7 @@
 ##   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg" height="20" width="20"/> Создание сборки на удаленном сервере - Jenkins
 
 1) Авторизоваться в Jenkins
-2) Перейти в джобу https://jenkins.autotests.cloud/job/project_wildeberries_mozzhukhin
+2) Перейти в джобу https://jenkins.autotests.cloud/job/Ozon_Deposit/
 3) Для запуска тестов в Jenkins нажать "Build Now"
 
 
