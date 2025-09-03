@@ -28,8 +28,8 @@
 3) Для запуска тестов в Jenkins нажать "Build Now"
 
 
-## <img width="4%" title="allure" src="data/logo/allure_report.png"> Визуализация результатов (Allure Reports и Allure TestOps)
+## Визуализация результатов (Allure Reports и Allure TestOps)
 
 Для просмотра результатов тестового прогона в Allure клик на соответствующую ему иконку
 
-## <img width="4%" title="tg" src="data/logo/tg.png"> Интеграция с Telegram в Jenkins для автоматической отправки результатов тестового прогона через бота
+## Интеграция с Telegram в Jenkins для автоматической отправки результатов тестового прогона через бота
