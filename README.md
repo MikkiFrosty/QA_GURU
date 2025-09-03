@@ -13,16 +13,11 @@
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytest/pytest-original.svg" height="100" width="100"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" height="100" width="100"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg" height="100" width="100"/>
-  <code><img width="13%" title="Selene" src="data/logo/selene.png" alt="selene"/></code>
-  <code><img width="13%" title="Allure Report" src="data/logo/allure_report.png" alt="allure"></code>
-  <code><img width="13%" title="Allure Report" src="data/logo/allure_testops.png" alt="alluretest"></code>
-  <code><img width="13%" title="Allure Report" src="data/logo/selenoid.png" alt="selenoid"></code>
-  <code><img width="13%" title="Allure Report" src="data/logo/tg.png" alt="tg"></code>
 </p>
 
 ## <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" height="20" width="20"> Запуск тестов локально
 
-1) Клонировать репозиторий: git clone https://github.com/MozzhukhinRA/QAGURU_opensource_project_hw14.git
+1) Клонировать репозиторий: git clone https://github.com/MikkiFrosty/QA_GURU
 2) Установить зависимости: pip install -r requirements.txt
 3) Запуск тестов с генерацией отчетов Allure: pytest --alluredir=reports/allure-results
 
