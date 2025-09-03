@@ -5,6 +5,7 @@ from selene.support.shared import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from dotenv import load_dotenv
+from utils import attach
 
 load_dotenv()
 
@@ -33,5 +34,12 @@ def setup_browser():
     browser.config.window_height = 1080
     browser.config.timeout = 6
 
-    yield
-    browser.quit()
+    try:
+        yield browser
+    finally:
+        with allure.step('Tear down'):
+            attach.add_screenshot(browser)
+            attach.add_logs(browser)
+            attach.add_html(browser)
+            attach.add_video(browser)
+        browser.quit()

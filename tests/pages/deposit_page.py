@@ -50,12 +50,10 @@ class Deposit:
                 profit_text = browser.element(L.PROFIT).get(query.text).split("\n")[0].strip()
                 expected_profit = str(deposit.profit_amount).strip()
 
-                # сравнение только по цифрам и разделителям
                 act_num = re.sub(r'[^\d,.-]', '', profit_text)
                 exp_num = re.sub(r'[^\d,.-]', '', expected_profit)
 
-                print(f"[DEBUG] Ожидали: {exp_num}, получили: {act_num}")
-                assert act_num == exp_num, f"Ожидали: {exp_num}, получили: {act_num}"
+                assert act_num == exp_num
 
             if getattr(deposit, 'check_capitalization', None):
                 browser.element(L.CAPITALIZATION).should(be.visible)
