@@ -7,7 +7,7 @@ from selene import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-# Autoload .env from workspace root
+# Автозагрузка .env из корня проекта
 load_dotenv()
 
 def _build_selenoid_remote():
@@ -16,9 +16,8 @@ def _build_selenoid_remote():
     password = os.getenv('SELENOID_PASS', '').strip()
     raw = os.getenv('SELENOID_URL', 'selenoid.autotests.cloud').strip()
 
-    # If full url with creds is provided
-    if ('@' in raw) and ('wd/hub' in raw):
-        command_executor = raw if raw.startswith('http') else f'https://{raw}'
+    if '@' in raw and 'wd/hub' in raw:
+        command_executor = raw if raw.startswith('http') else f"https://{raw}"
     else:
         host = raw.replace('http://', '').replace('https://', '').rstrip('/')
         if 'wd/hub' not in host:
@@ -34,19 +33,18 @@ def _build_selenoid_remote():
     if os.getenv('HEADLESS', 'true').lower() in ('1', 'true', 'yes'):
         opts.add_argument('--headless=new')
 
-    caps = {
-        'browserName': 'chrome',
-        'selenoid:options': {
-            'enableVNC': True,
-            'enableVideo': True,
-        },
-        'name': os.getenv('BUILD_TAG', 'ui-tests'),
-    }
+    # capabilities через set_capability
+    opts.set_capability('browserName', 'chrome')
+    opts.set_capability('selenoid:options', {
+        'enableVNC': True,
+        'enableVideo': True,
+    })
+    opts.set_capability('name', os.getenv('BUILD_TAG', 'ui-tests'))
+    opts.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
 
     driver = webdriver.Remote(
         command_executor=command_executor,
-        options=opts,
-        desired_capabilities=caps,
+        options=opts
     )
     return driver
 
@@ -54,23 +52,38 @@ def _build_selenoid_remote():
 @pytest.fixture(scope='function', autouse=True)
 def setup_browser():
     driver = _build_selenoid_remote()
-
     browser.config.driver = driver
     browser.config.base_url = os.getenv('BASE_URL', 'https://finance.ozon.ru')
-    browser.config.window_width = 1920
-    browser.config.window_height = 1080
-    browser.config.timeout = float(os.getenv('SELENE_TIMEOUT', '6'))
+    browser.config.timeout = float(os.getenv('SELENE_TIMEOUT', 6))
+
+    yield
+
+    # Allure attachments
+    try:
+        png = browser.driver.get_screenshot_as_png()
+        allure.attach(png, name="last_screenshot", attachment_type=allure.attachment_type.PNG)
+    except Exception:
+        pass
 
     try:
-        yield browser
-    finally:
-        with allure.step('Attachments & Teardown'):
-            try:
-                from utils.attach import add_screenshot, add_html, add_logs, add_video
-                add_screenshot(browser)
-                add_html(browser)
-                add_logs(browser)
-                add_video(browser)
-            except Exception:
-                pass
-        browser.quit()
+        html = browser.driver.page_source
+        allure.attach(html, name="page_source", attachment_type=allure.attachment_type.HTML)
+    except Exception:
+        pass
+
+    try:
+        logs = browser.driver.get_log("browser")
+        allure.attach(str(logs), name="browser_console_logs", attachment_type=allure.attachment_type.TEXT)
+    except Exception:
+        pass
+
+    try:
+        session_id = browser.driver.session_id
+        video_host = os.getenv("SELENOID_VIDEO_BASE", "https://selenoid.autotests.cloud/video")
+        video_url = f"{video_host}/{session_id}.mp4"
+        html = f'<html><body><video width="100%" height="100%" controls autoplay><source src="{video_url}" type="video/mp4"></video></body></html>'
+        allure.attach(html, name="video", attachment_type=allure.attachment_type.HTML)
+    except Exception:
+        pass
+
+    browser.quit()
