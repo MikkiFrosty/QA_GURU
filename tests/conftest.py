@@ -39,7 +39,6 @@ def _build_selenoid_remote():
         'enableVNC': True,
         'enableVideo': True,
     })
-    opts.set_capability('name', os.getenv('BUILD_TAG', 'ui-tests'))
     opts.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
 
     driver = webdriver.Remote(
