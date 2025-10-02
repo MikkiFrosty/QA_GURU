@@ -3,7 +3,7 @@
     "project": "Ozon_Deposit",
     "environment": "DEV",
     "comment": "No comment",
-    "reportLink": "https://jenkins.autotests.cloud/job/Homework%2092/",
+    "reportLink": "https://jenkins.autotests.cloud/job/UI_Ozone_deposit/",
     "language": "ru",
     "allureFolder": "allure-report",
     "enableChart": true,
