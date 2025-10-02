@@ -1,46 +1,68 @@
-
 import os
 import pytest
-from selene.support.shared import browser
+from selene import browser
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from dotenv import load_dotenv
-from utils import attach
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 import allure
+from utils import attach
 
-load_dotenv()
 
-@pytest.fixture(autouse=True, scope='function')
+@pytest.fixture(scope="function", autouse=True)
 def setup_browser():
-    host = os.getenv('SELENOID_URL')
-    login = os.getenv('SELENOID_LOGIN')
-    password = os.getenv('SELENOID_PASS')
+    base_url = os.getenv("BASE_URL", "https://finance.ozon.ru")
+    remote = os.getenv("REMOTE", "false").lower() == "true"
 
-    # чтобы не было host='none'
-    assert host and login and password, 'ENV missing: SELENOID_URL/LOGIN/PASS'
+    options = ChromeOptions()
+    options.add_argument("--disable-popup-blocking")
+    options.add_argument("--disable-notifications")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
 
-    options = Options()
-    options.set_capability('browserName', 'chrome')
-    options.set_capability('browserVersion', '128.0')
-    options.set_capability('selenoid:options', {'enableVNC': True, 'enableVideo': False})
+    if remote:
+        # читаем креды и URL
+        login = os.getenv("SELENOID_LOGIN")
+        password = os.getenv("SELENOID_PASS")
+        selenoid_url = os.getenv("SELENOID_URL", "selenoid.autotests.cloud/wd/hub").replace("http://", "").replace("https://", "")
 
-    driver = webdriver.Remote(
-        command_executor=f'https://{login}:{password}@{host}/wd/hub',
-        options=options,
-    )
+        capabilities = {
+            "browserName": "chrome",
+            "browserVersion": "100.0",
+            "selenoid:options": {
+                "enableVNC": True,
+                "enableVideo": True
+            }
+        }
+
+        executor = f"https://{selenoid_url}"
+
+        # передаём креды через remote_connection (новый формат Selenium не глотает login:pass в URL)
+        from selenium.webdriver.remote.remote_connection import RemoteConnection
+        conn = RemoteConnection(executor, resolve_ip=False)
+        conn.set_auth((login, password))
+
+        driver = webdriver.Remote(
+            command_executor=conn,
+            options=options,
+            desired_capabilities=capabilities
+        )
+
+    else:
+        driver = webdriver.Chrome(options=options)
 
     browser.config.driver = driver
-    browser.config.base_url = 'https://finance.ozon.ru'
-    browser.config.window_width = 1920
-    browser.config.window_height = 1080
-    browser.config.timeout = 6
+    browser.config.base_url = base_url
+    browser.config.timeout = float(os.getenv("SELENE_TIMEOUT", "6"))
+    browser.driver.set_window_size(
+        int(os.getenv("WINDOW_WIDTH", "1920")),
+        int(os.getenv("WINDOW_HEIGHT", "1080"))
+    )
 
-    try:
-        yield browser
-    finally:
-        with allure.step('Tear down'):
-            attach.add_screenshot(browser)
-            attach.add_logs(browser)
-            attach.add_html(browser)
-            attach.add_video(browser)
-        browser.quit()
+    yield
+
+    # добавляем вложения в Allure
+    attach.add_screenshot(browser)
+    attach.add_logs(browser)
+    attach.add_html(browser)
+    attach.add_video(browser)
+
+    browser.quit()

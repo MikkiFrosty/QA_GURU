@@ -206,3 +206,12 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 /allure-results/
+# Python
+.venv/
+# Allure artifacts
+allure-report/
+# IDE
+# Secrets
+# OS junk
+.DS_Store
+Thumbs.db

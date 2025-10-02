@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="06f46637-70c2-447c-9df6-b1ff63741187" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/QA_GURU.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/QA_GURU.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/attachments/c830e6c71ec1f704.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/behaviors.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/behaviors.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/categories.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/categories.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/packages.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/suites.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/suites.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/test-cases/1759bc3097a039d2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/data/timeline.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/export/influxDbData.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/export/mail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/export/prometheusData.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/history/categories-trend.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/history/duration-trend.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/history/history-trend.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/history/history.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/history/retry-trend.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/plugin/behaviors/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/plugin/packages/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/plugin/screen-diff/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/plugin/screen-diff/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/behaviors.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/categories-trend.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/categories.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/duration-trend.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/duration.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/environment.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/executors.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/history-trend.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/retry-trend.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/severity.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/status-chart.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/suites.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-report/widgets/summary.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/allure-notifications-4.11.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications/telegram.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/models/deposit.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/models/deposit_calculator_locators.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/pages/deposit_page.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_ deposit.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/attach.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/attach.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MikkiFrosty&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MikkiFrosty/QA_GURU.git&quot;,
+    &quot;accountId&quot;: &quot;a38db0d7-98fc-4873-8dbb-59cc8196afae&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="33WJ0SI4JI5cbFK3SxPvVhwDLnV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-53e2683a6804-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.26094.141" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="06f46637-70c2-447c-9df6-b1ff63741187" name="Changes" comment="" />
+      <created>1759426672389</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759426672389</updated>
+    </task>
+    <servers />
+  </component>
+</project>

@@ -9,7 +9,7 @@ class DepositCalculatorLocators:
     PROFIT   = by.xpath("//div[@data-testid='income']")
     MATURITY = by.xpath("//div[@data-testid='income']//span")
     CTA      = by.xpath("(//button[contains(., 'Открыть') and contains(., 'вклад') and contains(., 'бесплатно')])[2]")
-    CONDITIONS = by.xpath("//a[@data-testid='rates-button']")
+    CONDITIONS = by.xpath("//a[@data-testid='ob-button' and contains(@href, 'deposit-tariffs')]")
     DEPOSIT_TYPE = by.xpath("//div[@data-testid='ob-badge']")
     CAPITALIZATION = by.xpath("//button[@data-testid='deposit-button']")
     STUB = by.xpath("//div[@data-testid='warning']")
