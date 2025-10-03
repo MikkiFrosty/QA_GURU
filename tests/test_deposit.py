@@ -8,6 +8,7 @@ from tests.models.deposit_calculator_locators import DepositCalculatorLocators a
 @allure.epic("Ozon Deposit")
 @allure.feature("Позитивные сценарии")
 @allure.story("Корректные данные")
+@allure.tag('ui', 'deposit', 'positive')
 def test_deposit_valid():
     page = DepositPage().open_form()
     value = Deposit_class(
@@ -28,6 +29,7 @@ def test_deposit_valid():
 @allure.epic("Ozon Deposit")
 @allure.feature("Позитивные сценарии")
 @allure.story("Ровно минимальная сумма")
+@allure.tag('ui', 'deposit', 'boundary', 'positive')
 def test_deposit_min():
     page = DepositPage().open_form()
     value = Deposit_class(
@@ -43,6 +45,7 @@ def test_deposit_min():
 @allure.epic("Ozon Deposit")
 @allure.feature("Негативные сценарии")
 @allure.story("Сумма ниже минимума")
+@allure.tag('ui', 'deposit', 'negative', 'validation')
 def test_deposit_invalid_sum_below_min():
     page = DepositPage().open_form()
     value = Deposit_class(
@@ -54,6 +57,7 @@ def test_deposit_invalid_sum_below_min():
 @allure.epic("Ozon Deposit")
 @allure.feature("Негативные сценарии")
 @allure.story("Нечисловой ввод")
+@allure.tag('ui', 'deposit', 'negative', 'validation')
 def test_deposit_invalid_symbols():
     page = DepositPage().open_form()
     value = Deposit_class(
@@ -65,6 +69,7 @@ def test_deposit_invalid_symbols():
 @allure.epic("Ozon Deposit")
 @allure.feature("Отображение формы")
 @allure.story("Форма отображается")
+@allure.tag('ui', 'deposit', 'smoke')
 def test_form_display_smoke():
     page = DepositPage().open_form()
     value = Deposit_class(deposit_amount=150000, term=3)
