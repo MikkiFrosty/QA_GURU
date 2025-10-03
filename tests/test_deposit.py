@@ -1,10 +1,14 @@
+import allure
 import pytest
 from selene import browser, be, have
 from tests.pages.deposit_page import Deposit as DepositPage
 from tests.models.deposit import Deposit_class
 from tests.models.deposit_calculator_locators import DepositCalculatorLocators as L
 
-
+@allure.epic("Ozon Deposit")
+@allure.feature("Позитивные сценарии")
+@allure.story("Корректные данные")
+@allure.id(1001)
 def test_deposit_valid():
     page = DepositPage().open_form()
     value = Deposit_class(
@@ -22,7 +26,10 @@ def test_deposit_valid():
         .should_show_calc(value) \
         .should_have_active_buttons(value)
 
-
+@allure.epic("Ozon Deposit")
+@allure.feature("Позитивные сценарии")
+@allure.story("Ровно минимальная сумма")
+@allure.id(1002)
 def test_deposit_min():
     page = DepositPage().open_form()
     value = Deposit_class(
@@ -35,7 +42,10 @@ def test_deposit_min():
     )
     page.filling_field(value).should_show_calc(value).should_have_active_buttons(value)
 
-
+@allure.epic("Ozon Deposit")
+@allure.feature("Негативные сценарии")
+@allure.story("Сумма ниже минимума")
+@allure.id(1003)
 def test_deposit_invalid_sum_below_min():
     page = DepositPage().open_form()
     value = Deposit_class(
@@ -44,6 +54,10 @@ def test_deposit_invalid_sum_below_min():
     page.filling_field(value)
     page.should_have_stub()
 
+@allure.epic("Ozon Deposit")
+@allure.feature("Негативные сценарии")
+@allure.story("Нечисловой ввод")
+@allure.id(1004)
 def test_deposit_invalid_symbols():
     page = DepositPage().open_form()
     value = Deposit_class(
@@ -52,6 +66,10 @@ def test_deposit_invalid_symbols():
     page.filling_field(value)
     page.should_have_stub()
 
+@allure.epic("Ozon Deposit")
+@allure.feature("Отображение формы")
+@allure.story("Форма отображается")
+@allure.id(1005)
 def test_form_display_smoke():
     page = DepositPage().open_form()
     value = Deposit_class(deposit_amount=150000, term=3)

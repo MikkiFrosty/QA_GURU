@@ -7,18 +7,20 @@ from tests.models.deposit_calculator_locators import DepositCalculatorLocators a
 
 @allure.epic("Ozon Deposit")
 @allure.feature("Калькулятор вклада — дополнительные проверки")
+
 class TestDepositExtra:
-    @allure.story("Смена срока: 3 месяца — проверка типа вклада")
-    @allure.severity(allure.severity_level.NORMAL)
-    def test_term_3_months_updates_badge(self):
+
+@allure.story("Смена срока: 3 месяца — проверка типа вклада")
+@allure.id(1006)
+def test_term_3_months_updates_badge(self):
         page = DepositPage().open_form()
         value = Deposit_class(deposit_amount=150000, term=3, deposit_type="Вклад на 3 месяца")
         page.filling_field(value)
         browser.element(L.DEPOSIT_TYPE).should(be.visible).should(have.text("3"))
 
-    @allure.story("Капитализация меняет расчёт прибыли (визуально)")
-    @allure.severity(allure.severity_level.MINOR)
-    def test_capitalization_toggles_profit_value(self):
+@allure.story("Капитализация меняет расчёт прибыли (визуально)")
+@allure.id(1007)
+def test_capitalization_toggles_profit_value(self):
         page = DepositPage().open_form()
         base = Deposit_class(deposit_amount=100000, term=4, check_capitalization=False)
         page.filling_field(base)
