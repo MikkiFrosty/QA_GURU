@@ -92,6 +92,6 @@ allure serve allure-results
 
 ## Пример видео прохождения тестов
 
-<p align="center">
-  <img src="images/ozon_autotest.gif" alt="Autotest video gif">
-</p>
+> Автотест: пример прохождения сценария Ozon Deposit
+
+[![Автотест: пример прохождения сценария Ozon Deposit](images/ozon_autotest_preview.png)](images/ozon_autotest.mp4)
