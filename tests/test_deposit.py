@@ -65,7 +65,6 @@ def test_deposit_invalid_symbols():
 @allure.story("Форма отображается (smoke)")
 @allure.tag('ui', 'deposit', 'smoke')
 def test_form_display_smoke():
-    browser.open("/deposit")
     page = DepositPage().open_form()
     value = Deposit_class(deposit_amount=150000, term=3)
     page.filling_field(value).should_have_active_buttons()
