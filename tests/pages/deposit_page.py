@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 import allure
 from selene import have, be, by, query
 from selene import browser
-from tests.models.deposit import Deposit_class
+from tests.models.deposit import DepositClass
 from tests.models.deposit_calculator_locators import DepositCalculatorLocators as L
 
 
@@ -15,7 +15,7 @@ class Deposit:
             browser.driver.set_window_size(1920, 1080)
         return self
 
-    def filling_field(self, deposit: Deposit_class):
+    def filling_field(self, deposit: DepositClass):
         with allure.step("Вводим сумму"):
             if deposit.deposit_amount is not None:
                 e = browser.element(L.AMOUNT)
@@ -28,7 +28,7 @@ class Deposit:
                 browser.element(L.TERM_BTN(deposit.term)).click()
         return self
 
-    def should_show_calc(self, deposit: Deposit_class):
+    def should_show_calc(self, deposit: DepositClass):
         with allure.step('Проверяем результат калькулятора'):
 
             time.sleep(1)
@@ -60,7 +60,7 @@ class Deposit:
 
         return self
 
-    def should_have_active_buttons(self, deposit: Deposit_class = None):
+    def should_have_active_buttons(self, deposit: DepositClass = None):
         with allure.step('Проверяем кнопки'):
             check_conditions = True
             check_cta = True

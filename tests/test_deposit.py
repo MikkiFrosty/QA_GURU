@@ -2,7 +2,7 @@ import allure
 import pytest
 from selene import browser, be, have, query
 from tests.pages.deposit_page import Deposit as DepositPage
-from tests.models.deposit import Deposit_class
+from tests.models.deposit import DepositClass
 from tests.models.deposit_calculator_locators import DepositCalculatorLocators as L
 
 
@@ -12,7 +12,7 @@ from tests.models.deposit_calculator_locators import DepositCalculatorLocators a
 @allure.tag('ui', 'deposit', 'positive')
 def test_deposit_valid():
     page = DepositPage().open_form()
-    value = Deposit_class(
+    value = DepositClass(
         deposit_amount=150000,
         term=4,
         interest_rate="14,8%",
@@ -34,7 +34,7 @@ def test_deposit_valid():
 @allure.tag('ui', 'deposit', 'positive', 'boundary')
 def test_deposit_min():
     page = DepositPage().open_form()
-    value = Deposit_class(deposit_amount=10000, term=4)
+    value = DepositClass(deposit_amount=10000, term=4)
     page.filling_field(value).should_show_calc(value).should_have_active_buttons(value)
 
 
@@ -44,7 +44,7 @@ def test_deposit_min():
 @allure.tag('ui', 'deposit', 'negative', 'validation')
 def test_deposit_invalid_sum_below_min():
     page = DepositPage().open_form()
-    value = Deposit_class(deposit_amount=9999)
+    value = DepositClass(deposit_amount=9999)
     page.filling_field(value)
     page.should_have_stub()
 
@@ -55,7 +55,7 @@ def test_deposit_invalid_sum_below_min():
 @allure.tag('ui', 'deposit', 'negative', 'validation')
 def test_deposit_invalid_symbols():
     page = DepositPage().open_form()
-    value = Deposit_class(deposit_amount="абвгдabcXYZ!@#$%^&*()")
+    value = DepositClass(deposit_amount="абвгдabcXYZ!@#$%^&*()")
     page.filling_field(value)
     page.should_have_stub()
 
@@ -66,7 +66,7 @@ def test_deposit_invalid_symbols():
 @allure.tag('ui', 'deposit', 'smoke')
 def test_form_display_smoke():
     page = DepositPage().open_form()
-    value = Deposit_class(deposit_amount=150000, term=3)
+    value = DepositClass(deposit_amount=150000, term=3)
     page.filling_field(value).should_have_active_buttons()
     browser.element(L.RATE).should(be.visible)
     browser.element(L.PROFIT).should(be.visible)

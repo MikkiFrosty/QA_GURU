@@ -1,7 +1,7 @@
 import allure
 from selene import browser, be, have, query
 from tests.pages.deposit_page import Deposit as DepositPage
-from tests.models.deposit import Deposit_class
+from tests.models.deposit import DepositClass
 from tests.models.deposit_calculator_locators import DepositCalculatorLocators as L
 
 
@@ -13,7 +13,7 @@ class TestDepositExtra:
     @allure.tag('ui', 'deposit', 'calculation')
     def test_term_3_months_updates_badge(self):
         page = DepositPage().open_form()
-        value = Deposit_class(deposit_amount=150000, term=3)
+        value = DepositClass(deposit_amount=150000, term=3)
         page.filling_field(value)
         browser.element(L.DEPOSIT_TYPE).should(be.visible).should(have.text("3 месяца"))
 
@@ -22,11 +22,11 @@ class TestDepositExtra:
     def test_capitalization_toggles_profit_value(self):
         page = DepositPage().open_form()
 
-        base = Deposit_class(deposit_amount=100000, term=4, check_capitalization=False)
+        base = DepositClass(deposit_amount=100000, term=4, check_capitalization=False)
         page.filling_field(base)
         profit_without = browser.element(L.PROFIT).get(query.text)
 
-        with_cap = Deposit_class(deposit_amount=100000, term=4, check_capitalization=True)
+        with_cap = DepositClass(deposit_amount=100000, term=4, check_capitalization=True)
         page.filling_field(with_cap)
         profit_with = browser.element(L.PROFIT).get(query.text)
 

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 @dataclass
-class Deposit_class:
+class DepositClass:
     deposit_amount: Optional[str] = None
     term: Optional[str] = None
     interest_rate: Optional[str] = None
