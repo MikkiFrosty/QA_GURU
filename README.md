@@ -17,15 +17,8 @@
 
 ## Технологический стек
 
-<p align="center">
-  <img src="images/logos/python-original.png" width="50" height="50" alt="Python"/>
-  <img src="images/logos/pytest.png" width="50" height="50" alt="Pytest"/>
-  <img src="images/logos/selenium.png" width="50" height="50" alt="Selenium/Selene"/>
-  <img src="images/logos/jenkins.png" width="50" height="50" alt="Jenkins"/>
-  <img src="images/logos/allure_report.png" width="50" height="50" alt="Allure Report"/>
-  <img src="images/logos/allure_testops.png" width="50" height="50" alt="Allure TestOps"/>
-  <img src="images/logos/tg.png" width="50" height="50" alt="Telegram"/>
-  <img src="images/logos/github.png" width="50" height="50" alt="GitHub"/>
+<p  align="center">
+<img src="images/logos/python-original.svg" width="50" title="Python"> <img src="images/logos/pytest.png" width="50" title="Pytest"> <img src="images/logos/intellij_pycharm.png" width="50" title="PyCharm"> <img src="images/logos/selene.png" width="50" title="Selene"> <img src="images/logos/selenium.png" width="50" title="Selenium"> <img src="images/logos/selenoid.png" width="50" title="Selenoid"> <img src="images/logos/jenkins.png" width="50" title="Jenkins"> <img src="images/logos/allure_report.png" width="50" title="Allure Report"> <img src="images/logos/allure_testops.png" width="50" title="Allure TestOps"> <img src="images/logos/tg.png" width="50" title="Telegram"> <img src="images/logos/jira.png" width="50" title="Jira"> <img src="images/logos/github.png" width="50" title="GitHub">
 </p>
 
 В проекте автотесты написаны на <code>Python + Pytest</code> с использованием <code>Selenium/Selene</code> для UI. 
@@ -90,8 +83,8 @@ allure serve allure-results
   <img src="images/tg_notification.png" alt="Telegram уведомление: 7 успешных" height="280">
 </p>
 
-## Пример видео прохождения тестов
-
-> Автотест: пример прохождения сценария Ozon Deposit
-
-[![Автотест: пример прохождения сценария Ozon Deposit](images/ozon_autotest_preview.png)](images/ozon_autotest.mp4)
+## Примеры запуска тестов в Selenoid
+### <img src="images/logo/Selenoid.svg" width="25" height="25" alt="Jenkins"/></a> Видео <a target="_blank" href="https://selenoid.autotests.cloud/video/7ee25c91-580b-4431-a190-bf0903550d0c.mp4">прохождения тестов </a>
+<p align="center">
+<img title="Local launch example" src="images/gif/video.gif">
+</p>
