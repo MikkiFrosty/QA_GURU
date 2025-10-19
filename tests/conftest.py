@@ -13,14 +13,11 @@ from urllib.error import URLError, HTTPError
 
 
 def _make_remote_url() -> str:
-    # Builds a proper Remote WebDriver URL from SELENOID_URL env.
-    # Accepts forms with/without protocol and /wd/hub suffix.
     raw = (os.getenv("SELENOID_URL") or "https://user1:1234@selenoid.autotests.cloud/wd/hub").strip()
     if not raw.startswith("http"):
         raw = f"https://{raw}"
     if "/wd/hub" not in raw:
-        if raw.endswith("/"):
-            raw = raw[:-1]
+        raw = raw.rstrip("/")
         raw = f"{raw}/wd/hub"
     return raw
 
@@ -38,12 +35,12 @@ def _make_driver():
         if version:
             opts.set_capability("browserVersion", version)
     else:
-        # Default to chrome, but WITHOUT any user-data-dir if value is empty
         opts = ChOptions()
         if headless:
             opts.add_argument("--headless=new")
         opts.add_argument("--no-sandbox")
         opts.add_argument("--disable-dev-shm-usage")
+        # никаких user-data-dir без значения
         udd = (os.getenv("CHROME_USER_DATA_DIR") or "").strip()
         if udd:
             opts.add_argument(f"--user-data-dir={udd}")
@@ -61,18 +58,10 @@ def _make_driver():
         "name": os.getenv("BUILD_TAG", "ui-tests")
     })
 
-    remote = _make_remote_url()
-    print("[SELENOID] remote url:", remote)
-    print("[SELENOID] caps:", json.dumps({
-        "browserName": "firefox" if browser_name == "firefox" else "chrome",
-        "browserVersion": version or "(auto)"
-    }))
-
-    return webdriver.Remote(command_executor=remote, options=opts)
+    return webdriver.Remote(command_executor=_make_remote_url(), options=opts)
 
 
-def _wait_video_available(video_url: str, timeout_sec: int = 30, poll: float = 1.0) -> bool:
-    # Polls Selenoid /video/<session>.mp4 until exists & has content
+def _wait_video_ready(video_url: str, timeout_sec: int = 20, poll: float = 1.0) -> bool:
     deadline = time.time() + timeout_sec
     while time.time() < deadline:
         try:
@@ -80,7 +69,7 @@ def _wait_video_available(video_url: str, timeout_sec: int = 30, poll: float = 1
             with urlopen(req, timeout=5) as r:
                 if r.status == 200 and int(r.headers.get("Content-Length", "0")) > 1024:
                     return True
-        except (URLError, HTTPError, TimeoutError, Exception):
+        except Exception:
             pass
         time.sleep(poll)
     return False
@@ -102,19 +91,11 @@ def setup_browser():
         session_id = None
 
     try:
-        allure.attach(
-            browser.driver.get_screenshot_as_png(),
-            name="screenshot",
-            attachment_type=allure.attachment_type.PNG
-        )
+        allure.attach(browser.driver.get_screenshot_as_png(), name="screenshot", attachment_type=allure.attachment_type.PNG)
     except Exception:
         pass
     try:
-        allure.attach(
-            browser.driver.page_source,
-            name="page_source",
-            attachment_type=allure.attachment_type.HTML
-        )
+        allure.attach(browser.driver.page_source, name="page_source", attachment_type=allure.attachment_type.HTML)
     except Exception:
         pass
 
@@ -128,28 +109,18 @@ def setup_browser():
 
     video_base = (os.getenv("SELENOID_VIDEO_BASE") or "https://selenoid.autotests.cloud/video").rstrip("/")
     video_url = f"{video_base}/{session_id}.mp4"
-    available = _wait_video_available(video_url, timeout_sec=30, poll=1.0)
+    ready = _wait_video_ready(video_url, timeout_sec=20, poll=1.0)
 
+    html = (
+        '<html><body style="margin:0;background:#000">'
+        f'<p style="color:#ccc;font:12px/1.4 monospace;margin:8px">'
+        f'Источник: <a style="color:#9cf" href="{video_url}" target="_blank">{video_url}</a>'
+        '</p>'
+        f'<video width="100%" height="100%" controls {"autoplay" if ready else ""}>'
+        f'<source src="{video_url}" type="video/mp4">Видео пока не доступно.'
+        '</video></body></html>'
+    )
     try:
-        html = (
-            '<html><body style="margin:0;background:#000">'
-            f'<video width="100%" height="100%" controls {"autoplay" if available else ""}>'
-            f'<source src="{video_url}" type="video/mp4">Видео пока не доступно: {video_url}'
-            "</video></body></html>"
-        )
         allure.attach(html, name="Selenoid video", attachment_type=allure.attachment_type.HTML)
     except Exception:
         pass
-
-    if available:
-        try:
-            req = Request(video_url, headers={"User-Agent": "allure-video-download"})
-            with urlopen(req, timeout=20) as r:
-                data = r.read()
-            os.makedirs("allure-results", exist_ok=True)
-            mp4_path = os.path.join("allure-results", f"{session_id}.mp4")
-            with open(mp4_path, "wb") as f:
-                f.write(data)
-            allure.attach.file(mp4_path, name="Selenoid video (mp4)", attachment_type=allure.attachment_type.MP4)
-        except Exception as e:
-            allure.attach(str(e), name="video_download_error", attachment_type=allure.attachment_type.TEXT)
